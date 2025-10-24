@@ -1,18 +1,18 @@
 version: 0.2
-
 phases:
   build:
     commands:
-      - mkdir -p artifact/app
-      - cp index.html artifact/app/
-      - cp app.js artifact/app/
-      - cp appspec.yml artifact/
+      - set -e
+      - rm -rf artifact
       - mkdir -p artifact/scripts
-      - cp scripts/*.sh artifact/scripts/
-
+      - cp index.html app.js appspec.yml artifact/
+      - cp scripts/*.sh artifact/scripts/ || true
+      - chmod +x artifact/scripts/*.sh || true
 artifacts:
+  base-directory: artifact
   files:
+    - index.html
+    - app.js
     - appspec.yml
     - scripts/**/*
-    - app/**/*
   discard-paths: no

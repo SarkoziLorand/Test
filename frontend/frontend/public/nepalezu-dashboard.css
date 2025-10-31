@@ -1,0 +1,92 @@
+/* ===== Base / Reset ===== */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+}
+
+:root {
+    background: #0a1321;
+}
+
+.backgrounebun {
+    background: rgba(12, 17, 25, .85);
+}
+
+.layout-row {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+}
+
+.dashboard {
+    --bg: #070b11;
+    --ink: #d5dde6;
+    --muted: #96a3b4;
+    --panel: #0c1119;
+    --glass: #111826;
+    --gold: #c7a441;
+    --emerald: #2dd4bf;
+    --azure: #60a5fa;
+    --border: rgba(255, 255, 255, .08);
+
+    background: rgba(12, 17, 25, .85);
+    color: var(--ink);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+    width: 280px;
+    min-height: 100vh;
+    padding: 22px;
+    border-right: 1px solid var(--border);
+
+    flex-shrink: 0;
+}
+
+.dashboard .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+}
+
+.dashboard .nav {
+    display: grid;
+    gap: 8px;
+    margin-top: 18px;
+}
+
+.dashboard .nav a {
+    color: var(--ink);
+    text-decoration: none;
+    opacity: .9;
+    padding: 10px 12px;
+    border-radius: 12px;
+    display: inline-block;
+}
+
+.dashboard .nav a:is(:hover, :focus-visible) {
+    opacity: 1;
+    outline: none;
+    background: rgba(255, 255, 255, .03);
+}
+
+.dashboard .nav a.is-active {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, 0));
+    border: 1px solid var(--border);
+}
+
+.right-side-dashboard {
+    background-color: rgba(12, 17, 25, .85);
+    flex: 1;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 14px;
+}

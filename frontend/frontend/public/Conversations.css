@@ -1,0 +1,108 @@
+/* ---------- Conversations container ---------- */
+.conv-wrap{
+  display:block;
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  border-radius: var(--radius, 16px);
+  box-shadow: var(--shadow, 0 20px 50px rgba(0,0,0,.35));
+  padding:16px;
+  color: var(--ink, #e6edf3);
+}
+
+/* ---------- Header ---------- */
+.conv-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;
+}
+
+.conv-titlewrap{ display:flex; align-items:center; gap:10px; }
+.conv-title{ margin:0; font-weight:800; font-size:16px; letter-spacing:.3px; }
+
+.conv-meta{
+  display:inline-flex; gap:8px; align-items:center; font-size:12px; color:var(--muted, #9aa4ad);
+}
+.conv-meta .count{
+  display:inline-grid; place-items:center; min-width:24px; height:24px; padding:0 6px;
+  border-radius:999px; border:1px solid var(--border, rgba(255,255,255,.12));
+  background:rgba(255,255,255,.04); font-weight:700; color:var(--ink, #e6edf3);
+}
+.conv-meta .muted{ opacity:.75 }
+
+/* ---------- Actions ---------- */
+.conv-actions{ display:flex; align-items:center; gap:8px; }
+
+.conv-input{
+  width:260px; max-width:50vw;
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  background: rgba(255,255,255,.02);
+  color: var(--ink, #e6edf3);
+  border-radius:12px;
+  padding:10px 12px;
+  outline:none;
+}
+.conv-input:focus{ box-shadow:0 0 0 5px var(--ring, rgba(45,212,191,.35)); }
+
+/* ---------- Empty state ---------- */
+.conv-empty{
+  display:grid; place-items:center; text-align:center; gap:6px; padding:36px 12px; color:var(--muted, #9aa4ad);
+  border:1px dashed var(--border, rgba(255,255,255,.12)); border-radius:12px; background:rgba(255,255,255,.02);
+}
+.empty-title{ margin:6px 0 0; font-weight:700; color:var(--ink, #e6edf3) }
+.empty-sub{ margin:0; font-size:12px }
+
+/* ---------- Table ---------- */
+.conv-tablewrap{
+  overflow:auto; border:1px solid var(--border, rgba(255,255,255,.12));
+  border-radius:12px; background:rgba(255,255,255,.02);
+}
+
+.conv-table{
+  width:100%;
+  border-collapse:separate; border-spacing:0;
+  font-size:14px; color:var(--ink, #e6edf3);
+}
+
+.conv-table thead th{
+  text-align:left; font-weight:700; padding:12px 14px;
+  color:var(--muted, #9aa4ad);
+  position:sticky; top:0; backdrop-filter:saturate(1.1) blur(6px);
+  background: linear-gradient(180deg, rgba(13,18,28,.85), rgba(13,18,28,.70));
+  border-bottom:1px solid var(--border, rgba(255,255,255,.12));
+}
+
+.conv-table tbody td{
+  padding:12px 14px;
+  border-bottom:1px solid var(--border, rgba(255,255,255,.08));
+  vertical-align:middle;
+}
+
+.conv-table tbody tr:last-child td{ border-bottom:none }
+
+.conv-row:hover{
+  background: rgba(255,255,255,.03);
+}
+
+.cell-id{ font-weight:700; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size:13px; }
+.cell-agent .agent-name{ font-weight:600; }
+.cell-company{ opacity:.95; }
+.cell-preview{ color: var(--ink, #e6edf3); opacity:.9; }
+
+.cell-actions{ text-align:right; white-space:nowrap; }
+
+/* ---------- Buttons ---------- */
+.btn-primary{
+  appearance:none; cursor:pointer;
+  border:1px solid var(--emerald, #2dd4bf);
+  background: linear-gradient(90deg, var(--emerald, #2dd4bf), var(--azure, #60a5fa));
+  color:#0a0f15; font-weight:800; letter-spacing:.2px;
+  border-radius:10px; padding:8px 12px;
+  transition: transform .06s ease, filter .12s ease, box-shadow .12s ease;
+}
+.btn-primary:hover{ filter:brightness(1.05) }
+.btn-primary:active{ transform: translateY(1px) }
+.btn-primary:focus-visible{ outline:none; box-shadow:0 0 0 5px var(--ring, rgba(45,212,191,.35)) }
+
+/* a11y helpers */
+.visually-hidden{
+  position:absolute !important; height:1px; width:1px; overflow:hidden;
+  clip:rect(1px,1px,1px,1px); white-space:nowrap;
+}

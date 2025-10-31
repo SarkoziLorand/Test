@@ -1,0 +1,68 @@
+/* Minimal helpers for config sections.
+   Colors/variables come from your system (nepalezu + agents). */
+
+.cfg-chips {
+  display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;
+}
+.cfg-chip{
+  display:inline-flex; align-items:center; gap:6px; padding:4px 8px; border-radius:999px;
+  background:rgba(255,255,255,.06); border:1px solid var(--border, rgba(255,255,255,.12));
+  font-size:12px; font-weight:700; color:var(--ink, #e6edf3);
+}
+
+.cfg-section { display:grid; gap:10px; }
+.cfg-section-head{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.cfg-section-title{
+  margin:0; font-weight:800; font-size:16px; letter-spacing:.3px;
+}
+.cfg-count{
+  display:inline-grid; place-items:center; min-width:26px; height:26px; padding:0 8px;
+  border-radius:999px; border:1px solid var(--border, rgba(255,255,255,.12));
+  background:rgba(255,255,255,.04); font-weight:800;
+}
+
+.cfg-empty{
+  display:grid; place-items:center; text-align:center; gap:6px; padding:24px 12px; color:var(--muted, #9aa4ad);
+  border:1px dashed var(--border, rgba(255,255,255,.12)); border-radius:12px; background:rgba(255,255,255,.02);
+}
+
+.cfg-tablewrap{
+  overflow:auto; border:1px solid var(--border, rgba(255,255,255,.12));
+  border-radius:12px; background:rgba(255,255,255,.02);
+}
+.cfg-table{
+  width:100%;
+  border-collapse:separate; border-spacing:0;
+  font-size:14px; color:var(--ink, #e6edf3);
+}
+.cfg-table thead th{
+  text-align:left; font-weight:700; padding:10px 12px;
+  color:var(--muted, #9aa4ad);
+  position:sticky; top:0; backdrop-filter:saturate(1.1) blur(6px);
+  background: linear-gradient(180deg, rgba(13,18,28,.85), rgba(13,18,28,.70));
+  border-bottom:1px solid var(--border, rgba(255,255,255,.12));
+}
+.cfg-table tbody td{
+  padding:12px 12px; border-bottom:1px solid var(--border, rgba(255,255,255,.08));
+  vertical-align:middle;
+}
+.cfg-table tbody tr:last-child td{ border-bottom:none }
+
+.cell-strong{ font-weight:700; }
+.cell-mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:13px; white-space:nowrap;
+}
+.th-mono{ width:40%; }
+
+/* Scope badges */
+.cfg-scope{
+  display:inline-flex; align-items:center; gap:6px; padding:4px 10px; border-radius:999px;
+  background:rgba(255,255,255,.04); border:1px solid var(--border, rgba(255,255,255,.12));
+  font-size:12px; font-weight:700;
+}
+.cfg-scope.is-danger{
+  background:rgba(239,68,68,.12); border-color:rgba(239,68,68,.35); color:#ef4444;
+}

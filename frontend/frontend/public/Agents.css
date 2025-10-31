@@ -1,0 +1,189 @@
+/* ---------- Companies section (LIST PAGE) ---------- */
+.companies-wrap{
+  display:block;
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  border-radius: var(--radius, 16px);
+  box-shadow: var(--shadow, 0 20px 50px rgba(0,0,0,.35));
+  padding:16px;
+  color: var(--ink, #e6edf3);
+}
+
+.companies-head{
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;
+}
+.companies-title{ margin:0; font-weight:800; font-size:16px; letter-spacing:.3px; }
+.companies-meta{ display:inline-flex; gap:8px; align-items:center; font-size:12px; color:var(--muted, #9aa4ad) }
+.companies-meta .count{
+  display:inline-grid; place-items:center; min-width:24px; height:24px; padding:0 6px;
+  border-radius:999px; border:1px solid var(--border, rgba(255,255,255,.12));
+  background:rgba(255,255,255,.04); font-weight:700; color:var(--ink, #e6edf3);
+}
+.companies-meta .muted{ opacity:.75 }
+
+/* ---------- Empty state ---------- */
+.empty-state{
+  display:grid; place-items:center; text-align:center; gap:6px; padding:36px 12px; color:var(--muted, #9aa4ad);
+  border:1px dashed var(--border, rgba(255,255,255,.12)); border-radius:12px; background:rgba(255,255,255,.02);
+}
+.empty-title{ margin:6px 0 0; font-weight:700; color:var(--ink, #e6edf3) }
+.empty-sub{ margin:0; font-size:12px }
+
+/* ---------- Vertical list ---------- */
+.company-list{
+  list-style:none; margin:0; padding:0;
+  display:flex; flex-direction:column; gap:12px;
+}
+
+/* ---------- Company card ---------- */
+.company-card{
+  background: rgba(255,255,255,.02);
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  border-radius:14px;
+  transition: transform .12s ease, background .12s ease, box-shadow .12s ease;
+  overflow:hidden;
+}
+.company-card:hover{
+  transform: translateY(-2px);
+  background: rgba(255,255,255,.04);
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+}
+
+.card-body{
+  display:flex; align-items:center; gap:12px; padding:14px 16px;
+}
+.company-logo{
+  width:40px; height:40px; border-radius:12px; object-fit:cover;
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  background: rgba(255,255,255,.04);
+}
+.company-name{
+  margin:0; font-weight:700; line-height:1.3; letter-spacing:.2px;
+  white-space:normal; overflow:visible;
+  flex:1;
+}
+
+/* ---------- Toggle button ---------- */
+.btn-toggle{
+  appearance:none; background:transparent; cursor:pointer;
+  border:1px solid var(--border, rgba(255,255,255,.2));
+  color:var(--ink, #e6edf3); font-weight:700; letter-spacing:.2px;
+  border-radius:10px; padding:8px 12px;
+  transition: background .12s ease, border-color .12s ease, transform .06s ease, box-shadow .12s ease;
+}
+.btn-toggle:hover{ background:rgba(255,255,255,.06) }
+.btn-toggle:focus-visible{ outline:none; box-shadow:0 0 0 5px var(--ring, rgba(45,212,191,.35)); border-color:var(--emerald, #2dd4bf) }
+.btn-toggle[aria-expanded="true"]{ background:rgba(255,255,255,.08) }
+
+/* ---------- Agents collapsible panel ---------- */
+.agents-panel{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .25s ease, opacity .25s ease;
+  opacity:0;
+  border-top:1px solid transparent;
+}
+.agents-panel.open{
+  max-height:600px; /* allow room; adjust if needed */
+  opacity:1;
+  border-top:1px solid var(--border, rgba(255,255,255,.12));
+  background: rgba(255,255,255,.02);
+}
+
+/* ---------- Agents table ---------- */
+.agents-table{
+  width:100%; border-collapse:collapse;
+  font-size:14px; color:var(--ink, #e6edf3);
+}
+.agents-table thead th{
+  text-align:left; font-weight:700; padding:10px 16px;
+  color:var(--muted, #9aa4ad); border-bottom:1px solid var(--border, rgba(255,255,255,.12));
+}
+.agents-table tbody td{
+  padding:12px 16px; border-bottom:1px solid var(--border, rgba(255,255,255,.08));
+  vertical-align:middle;
+}
+.agents-table tbody tr:last-child td{ border-bottom:none }
+
+.agent-name{
+  display:flex; align-items:center; gap:10px; font-weight:600;
+}
+.agent-logo{
+  width:18px; height:18px; object-fit:cover; border-radius:4px;
+  border:1px solid var(--border, rgba(255,255,255,.18));
+  background: rgba(255,255,255,.04);
+}
+.agent-state{ opacity:.95; }
+.agent-assistant{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:13px;
+}
+.agent-actions{ text-align:right; white-space:nowrap; }
+
+/* ---------- Buttons ---------- */
+.btn-primary{
+  appearance:none; cursor:pointer;
+  border:1px solid var(--emerald, #2dd4bf);
+  background: linear-gradient(90deg, var(--emerald, #2dd4bf), var(--azure, #60a5fa));
+  color:#0a0f15; font-weight:800; letter-spacing:.2px;
+  border-radius:10px; padding:8px 12px;
+  transition: transform .06s ease, filter .12s ease, box-shadow .12s ease;
+}
+.btn-primary:hover{ filter:brightness(1.05) }
+.btn-primary:active{ transform: translateY(1px) }
+.btn-primary:focus-visible{ outline:none; box-shadow:0 0 0 5px var(--ring, rgba(45,212,191,.35)) }
+
+.btn-outline{
+  appearance:none; background:transparent; cursor:pointer;
+  border:1px solid var(--border, rgba(255,255,255,.2));
+  color:var(--ink, #e6edf3); font-weight:700; letter-spacing:.2px;
+  border-radius:10px; padding:8px 12px;
+  transition: background .12s ease, border-color .12s ease, transform .06s ease, box-shadow .12s ease;
+}
+.btn-outline:hover{ background:rgba(255,255,255,.06) }
+.btn-outline:focus-visible{ outline:none; box-shadow:0 0 0 5px var(--ring, rgba(45,212,191,.35)); border-color:var(--emerald, #2dd4bf) }
+
+/* ---------- Agent Detail (DETAIL PAGE) ---------- */
+.detail-wrap{
+  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  border-radius: var(--radius, 16px);
+  box-shadow: var(--shadow, 0 20px 50px rgba(0,0,0,.35));
+  padding:16px; color: var(--ink, #e6edf3);
+}
+.detail-head{
+  display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:12px;
+}
+.detail-id{ display:flex; align-items:center; gap:10px; }
+.detail-logo{
+  width:32px; height:32px; border-radius:8px; object-fit:cover;
+  border:1px solid var(--border, rgba(255,255,255,.2));
+  background: rgba(255,255,255,.04);
+}
+.detail-title{
+  margin:0; font-size:18px; font-weight:800; letter-spacing:.2px;
+}
+
+/* card cu meta */
+.detail-card{
+  background: rgba(255,255,255,.02);
+  border:1px solid var(--border, rgba(255,255,255,.12));
+  border-radius:12px;
+  padding:12px;
+}
+.detail-row{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 8px; border-bottom:1px solid var(--border, rgba(255,255,255,.08));
+}
+.detail-row:last-child{ border-bottom:none }
+.detail-label{
+  color: var(--muted, #9aa4ad); font-size:13px; font-weight:600;
+}
+.detail-value{ font-weight:700; }
+.detail-value.mono{
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size:13px;
+}
+
+.detail-body{ display:grid; gap:12px; }
+.detail-placeholder{ color: var(--muted, #9aa4ad); }

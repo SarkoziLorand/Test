@@ -1,0 +1,249 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  //output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  USER
+}
+
+enum CompanyStatus {
+  ACTIVE
+  SUSPENDED
+}
+
+enum AgentState {
+  REQUESTING_QR
+  INITIALIZING
+  AUTHENTICATED
+  CONNECTED
+  DISCONNECTED
+}
+
+enum WhitelistScope {
+  GROUP
+  CONTACT
+  ALL
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(USER)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  tokens    RefreshToken[]
+  companies Company[]
+}
+
+model RefreshToken {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model Company {
+  id        String        @id @default(uuid()) @db.Uuid
+  name      String        @unique
+  status    CompanyStatus @default(ACTIVE)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  email      String  @unique
+  country    String?
+  zip_code   String?
+  address    String?
+  vat_number String  @unique
+
+  members User[]
+
+  agents    Agent[]
+  configs   CompanyConfig[]
+  auditLogs AuditLog[]
+}
+
+model Agent {
+  id                String     @id @default(uuid()) @db.Uuid
+  companyId         String     @db.Uuid
+  company           Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  name              String
+  phoneNumber       String?
+  isActive          Boolean    @default(true)
+  state             AgentState @default(DISCONNECTED)
+  lastStateChangeAt DateTime?
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+
+  assistant_id  String
+  system_prompt String?
+
+  messages  MessageChat[]
+  apiKeys   AgentApiKey[]
+  whitelist AgentWhitelistEntry[]
+  blacklist AgentBlacklistEntry[]
+  configs   AgentConfig[]
+  flags     AgentFlag[]
+  tcMap     ChatThreadMap[]
+
+  @@index([companyId])
+}
+
+model MessageChat {
+  id      String @id @default(cuid())
+  agentId String @db.Uuid
+  agent   Agent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  chatId   String
+  threadId String
+
+  message   String
+  sender    String   @map("from")
+  createdAt DateTime @default(now())
+
+  @@index([agentId, chatId, createdAt])
+  @@index([agentId, threadId, createdAt])
+}
+
+model ChatThreadMap {
+  id      String @id @default(uuid()) @db.Uuid
+  agentId String @db.Uuid
+  agent   Agent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  chatId   String
+  threadId String
+
+  @@unique([agentId, chatId])
+  @@unique([agentId, threadId])
+}
+
+model AgentApiKey {
+  id      String @id @default(uuid()) @db.Uuid
+  agentId String @db.Uuid
+  agent   Agent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  key        String
+  keyPreview String  @default("")
+  name       String? @unique
+
+  integrationId String
+  integration   Integrations @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+
+  @@index([agentId])
+}
+
+model AgentWhitelistEntry {
+  id      String @id @default(uuid()) @db.Uuid
+  agentId String @db.Uuid
+  agent   Agent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  scope      WhitelistScope
+  identifier String?
+
+  @@unique([agentId, scope, identifier])
+}
+
+model AgentBlacklistEntry {
+  id      String @id @default(uuid()) @db.Uuid
+  agentId String @db.Uuid
+  agent   Agent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  scope      WhitelistScope
+  identifier String?
+
+  @@unique([agentId, scope, identifier])
+}
+
+model AgentConfig {
+  id      String @id @default(uuid()) @db.Uuid
+  agentId String @db.Uuid
+  agent   Agent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  name String
+  key  String
+
+  integrationId String?
+  integration   Integrations? @relation(fields: [integrationId], references: [id], onDelete: SetNull)
+
+  @@unique([agentId, name])
+}
+
+model AgentFlag {
+  id      String @id @default(uuid()) @db.Uuid
+  agentId String @db.Uuid
+  agent   Agent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  flagName String
+  status   String
+
+  @@unique([agentId, flagName])
+}
+
+model AuditLog {
+  id        String  @id @default(uuid()) @db.Uuid
+  companyId String  @db.Uuid
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  actorUserId String?
+
+  targetType String
+  targetId   String
+
+  oldData Json
+  newData Json
+
+  @@index([companyId])
+}
+
+model CompanyConfig {
+  id        String  @id @default(uuid()) @db.Uuid
+  companyId String  @db.Uuid
+  company   Company @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  key       String
+  keyPreviw String
+  value     String
+
+  @@unique([companyId, key])
+}
+
+model InboundMessage {
+  id              String    @id @default(cuid())
+  agentId         String    @db.Uuid
+  chatId          String
+  uniqueMessageId String
+  ts              DateTime?
+
+  @@unique([agentId, uniqueMessageId])
+  @@index([agentId, chatId])
+}
+
+model Integrations {
+  id          String        @id @default(cuid())
+  name        String        @unique
+  apiKeys     AgentApiKey[]
+  agentConfig AgentConfig[]
+}
